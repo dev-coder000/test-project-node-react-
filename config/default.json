@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://admin:admin@atlascluster.xvltmxy.mongodb.net/?appName=AtlasCluster",
+    "jsonToken":"Mysecrettoken@123"
+}
