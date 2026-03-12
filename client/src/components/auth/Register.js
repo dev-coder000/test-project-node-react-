@@ -1,8 +1,10 @@
 import React,{useState,useEffect}from 'react'
-import { Link } from 'react-router-dom'
+import { Link, UNSAFE_getPatchRoutesOnNavigationFunction } from 'react-router-dom'
+import {connect} from 'react-redux'
+import { Set_alert } from '../../action/alert'
+import PropTypes from 'prop-types'
 
-
-const Register = () => {
+const Register = ({Set_alert}) => {
     const[message,setmessage]=useState('')
     const[formData,setformData]=useState({
     name:"",
@@ -20,13 +22,13 @@ const onchange=e=>setformData({...formData,[e.target.name]:e.target.value})
 const Onsubmit=(e)=>{
     e.preventDefault()
     if(password!==password2){
-        setmessage("Password do not match")
+        Set_alert("Password do not match","danger")
     }else{    
           FormSubmit()
     }      
 }
 const FormSubmit=()=>{
-    fetch("http://localhost:5000/api/client/prof",{
+    fetch("http://localhost:5000/api/users",{
     method:"post",
     headers:{
       'Content-Type':"application/json"
@@ -74,16 +76,19 @@ const FormSubmit=()=>{
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
       </p>
-      {message!==""?(
+      {/* {message!==""?(
       <div className="alert alert-danger" style={{display:"block"}}>
         {message}
       </div>
       ):
-      ""}
+      ""} */}
     </section>
     
   )
   
 }
+Register.propTypes={
+  Set_alert: PropTypes.func.isRequired
 
-export default Register
+}
+export default connect(null,{Set_alert})(Register)
